@@ -10,12 +10,9 @@ trigger:
     - prod
   event:
     - tag
-    - custom
 
 steps:
   - name: publish
-    when:
-      event: [ tag ]
     image: plugins/docker
     dockerfile: Dockerfile
     context: .
