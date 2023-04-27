@@ -1,0 +1,29 @@
+---
+kind: pipeline
+type: kubernetes
+name: default
+platform:
+  os: linux
+
+trigger:
+  branch:
+    - prod
+  event:
+    - tag
+    - custom
+
+steps:
+  - name: publish
+    when:
+      event: [ tag ]
+    image: plugins/docker
+    dockerfile: Dockerfile
+    context: .
+    settings:
+      repo: nemo:5001/services/screenshot-service
+      registry: nemo:5001
+      insecure: true
+      auto_tag: true
+
+image_pull_secrets:
+  - nemo-registry-login
